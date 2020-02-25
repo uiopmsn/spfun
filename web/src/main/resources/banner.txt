@@ -1,0 +1,9 @@
+${AnsiColor.BRIGHT_YELLOW}
+ _______              _  _  _
+(_______)            (_)(_)(_)
+ _____ _   _ ____     _  _  _ _____
+|  ___) | | |  _ \   | || || | ___ |
+| |   | |_| | | | |  | || || | ____|
+|_|   |____/|_| |_|   \_____/|_____)
+${AnsiColor.BRIGHT_BLUE}
+::: Project (version:${application.version}) :::

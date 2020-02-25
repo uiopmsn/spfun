@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    initialization-mode: always
+    data: classpath:data.sql
+    master:
+      url: jdbc:mysql://localhost:3306/dj?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: newpassword
+      type: com.alibaba.druid.pool.DruidDataSource
+    cluster:
+      - key: slave1
+        url: jdbc:mysql://localhost:3306/m2?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: newpassword
+        type: com.alibaba.druid.pool.DruidDataSource
+      - key: slave2
+        url: jdbc:mysql://localhost:3306/m3?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: newpassword
+        type: com.alibaba.druid.pool.DruidDataSource
