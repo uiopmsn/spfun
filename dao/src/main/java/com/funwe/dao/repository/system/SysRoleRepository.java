@@ -1,6 +1,9 @@
 package com.funwe.dao.repository.system;
 
 import com.funwe.dao.entity.SysRole;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -26,4 +29,20 @@ public interface SysRoleRepository extends JpaRepository<SysRole, Long>{
      */
     @Query(value = "select r.* from sys_role r, sys_role_perm rp where rp.perm_id = ?1 and rp.role_id = r.id", nativeQuery = true)
     List<SysRole> findRolesOfPerm(long permId);
+
+    /**
+     * sdsdsdsd
+     * @param pageable
+     * @return
+     */
+    @Query(value = "SELECT * FROM sys_role", nativeQuery = true)
+    Page<SysRole> findAllRole(Pageable pageable);
+
+    /**
+     * wewe
+     * @param spec
+     * @param pageable
+     * @return
+     */
+    Page<SysRole> findAll(Specification<SysRole> spec, Pageable pageable);
 }

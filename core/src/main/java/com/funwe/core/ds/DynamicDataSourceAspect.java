@@ -22,7 +22,6 @@ public class DynamicDataSourceAspect {
         String dsId = ds.value();
         if (DynamicDataSourceContextHolder.dataSourceIds.contains(dsId)) {
             DynamicDataSourceContextHolder.removeDataSourceRouterKey();
-            //logger.info("使用数据源 :{} >", dsId, point.getSignature());
             DynamicDataSourceContextHolder.setDataSourceRouterKey(dsId);
         } else {
             logger.info("数据源[{}]不存在，使用默认数据源 >{}", dsId, point.getSignature());

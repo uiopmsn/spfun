@@ -24,6 +24,7 @@
         <commons-lang.version>3.3.2</commons-lang.version>
         <jwt.version>3.5.0</jwt.version>
         <fastjson.version>1.2.15</fastjson.version>
+        <lombok.version>1.16.10</lombok.version>
     </properties>
 
     <dependencies>
@@ -51,5 +52,6 @@
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
+
     </dependencies>
 </project>

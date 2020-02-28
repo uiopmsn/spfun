@@ -34,7 +34,6 @@ public class RequestInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        //System.out.println(request.getServletPath());
         //获取请求头的token, 没有的化返回失败，前端需要登录
         String token = request.getHeader("token");
 

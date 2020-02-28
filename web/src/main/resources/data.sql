@@ -19,7 +19,7 @@ select '/sysMange', '系统管理', '', -1, 'menu', 900 FROM DUAL WHERE NOT EXIS
 select @permId := id from sys_perm where perm_code='/sysMange';
 
 INSERT INTO sys_perm (perm_code, perm_name, icon, pid, type, order_by)
-select '/sysMange/roleManage', '角色管理', '', @permId, 'menu', 909 FROM DUAL WHERE NOT EXISTS
+select '/sysMange/roleManage', '角色管理', '', @permId, 'menu', 915 FROM DUAL WHERE NOT EXISTS
 (SELECT perm_code FROM sys_perm WHERE perm_code = '/sysMange/roleManage');
 
 INSERT INTO sys_perm (perm_code, perm_name, icon, pid, type, order_by)

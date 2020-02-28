@@ -1,6 +1,8 @@
 package com.funwe.dao.entity;
 
 import javax.persistence.*;
+import java.util.Date;
+
 
 /**
  * @author Administrator
@@ -13,6 +15,8 @@ public class SysRole {
     private long id;
     private String roleCode;
     private String roleName;
+    private int status;
+    private Date updatedAt;
 
     public long getId() {
         return id;
@@ -38,5 +42,19 @@ public class SysRole {
         this.roleName = roleName;
     }
 
+    public int getStatus() {
+        return status;
+    }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }
