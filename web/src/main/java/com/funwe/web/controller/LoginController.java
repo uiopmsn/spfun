@@ -1,10 +1,9 @@
 package com.funwe.web.controller;
 
-import com.funwe.common.utils.JwtUtil;
 import com.funwe.core.model.CurrentUser;
 import com.funwe.core.model.JsonResult;
 import com.funwe.dao.model.Menu;
-import com.funwe.service.system.UserService;
+import com.funwe.service.UserService;
 import com.funwe.web.model.LoginData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

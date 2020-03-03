@@ -1,15 +1,21 @@
-package com.funwe.service.system;
+package com.funwe.service;
 
 import com.alibaba.fastjson.JSON;
 import com.funwe.common.utils.CodecUtil;
 import com.funwe.common.utils.JwtUtil;
+import com.funwe.dao.entity.SysRole;
+import com.funwe.dao.entity.SysRolePerm;
 import com.funwe.dao.entity.SysUser;
 import com.funwe.dao.model.Menu;
 import com.funwe.dao.redis.SystemInfoRedis;
+import com.funwe.dao.repository.system.SysRolePermRepository;
+import com.funwe.dao.repository.system.SysRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +27,7 @@ import java.util.List;
 public class UserService {
     @Autowired
     private SystemInfoRedis systemInfoRedis;
+
 
     /**
      * 校验用户名和密码，成功返回TOKEN
@@ -57,4 +64,7 @@ public class UserService {
         }
         return menus;
     }
+
+
+
 }

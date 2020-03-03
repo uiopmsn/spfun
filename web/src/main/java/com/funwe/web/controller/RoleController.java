@@ -3,6 +3,7 @@ package com.funwe.web.controller;
 import com.funwe.core.model.JsonResult;
 import com.funwe.dao.entity.SysRole;
 import com.funwe.dao.repository.system.SysRoleRepository;
+import com.funwe.service.RoleService;
 import com.funwe.web.helper.SortHelper;
 import com.funwe.web.model.RoleTable;
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +39,9 @@ public class RoleController {
 
     @Autowired
     private SysRoleRepository roleRepository;
+
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping(value = "api/role/list")
     @ResponseBody
@@ -111,15 +115,67 @@ public class RoleController {
 
     @PostMapping(value = "api/role/stop")
     @ResponseBody
-    public JsonResult stopRole(@RequestBody Map<String,List<String>> map){
-        List<String> ids = map.get("id");
+    public JsonResult stopRole(@RequestBody Map<String,List<Long>> map){
+        List<Long> ids = map.get("ids");
         try {
             if (ids == null || ids.size() < 1){
                 throw new Exception("请选择要停用的角色");
             }
+            roleService.stopRoles(ids);
             return JsonResult.success();
         }catch (Exception e){
             return JsonResult.error(e.getMessage());
         }
     }
+
+    @PostMapping(value = "api/role/reset")
+    @ResponseBody
+    public JsonResult resetRole(@RequestBody Map<String,List<Long>> map){
+        List<Long> ids = map.get("ids");
+        try {
+            if (ids == null || ids.size() < 1){
+                throw new Exception("请选择要启用的角色");
+            }
+            roleService.resetRoles(ids);
+            return JsonResult.success();
+        }catch (Exception e){
+            return JsonResult.error(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "api/role/update")
+    @ResponseBody
+    public JsonResult updateRole(@RequestBody Map<String,Object> map){
+        try {
+            long id = Long.parseLong(map.get("id").toString());
+            String roleCode = map.get("roleCode").toString();
+            String roleName = map.get("roleName").toString();
+            List<String> strPerms = (List<String>)map.get("perms");
+            List<Long> perms = new ArrayList<>();
+            for (String str: strPerms){
+                perms.add(Long.parseLong(str));
+            }
+            //List<Long> perms = (List<Long>)map.get("perms");
+            if ("".equals(id)){
+                throw new Exception("缺少id");
+            }
+            if ("".equals(roleCode)){
+                throw new Exception("缺少角色编码");
+            }
+            if ("".equals(roleName)){
+                throw new Exception("缺少角色描述");
+            }
+            SysRole role = new SysRole();
+            role.setId(id);
+            role.setRoleCode(roleCode);
+            role.setRoleName(roleName);
+            roleService.updateRole(role, perms);
+            return JsonResult.success();
+        }catch (Exception e){
+            return JsonResult.error(e.getMessage());
+        }
+    }
+
+
+
 }
