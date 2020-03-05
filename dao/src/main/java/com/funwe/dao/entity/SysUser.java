@@ -3,6 +3,7 @@ package com.funwe.dao.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * @author Administrator
@@ -13,6 +14,8 @@ public class SysUser {
     @Id
     private String userName;
     private String passWord;
+    private int status;
+    private Date updatedAt;
 
     public String getUserName() {
         return userName;
@@ -28,5 +31,21 @@ public class SysUser {
 
     public void setPassWord(String passWord) {
         this.passWord = passWord;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
