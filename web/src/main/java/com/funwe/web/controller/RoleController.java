@@ -5,7 +5,7 @@ import com.funwe.dao.entity.SysRole;
 import com.funwe.dao.repository.SysRoleRepository;
 import com.funwe.service.RoleService;
 import com.funwe.web.helper.SortHelper;
-import com.funwe.web.model.RoleTable;
+import com.funwe.web.model.PageTable;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +45,8 @@ public class RoleController {
 
     @GetMapping(value = "api/role/list")
     @ResponseBody
-    public RoleTable getPageRole(Integer current, Integer pageSize, String sorter,
-            String roleCode, String roleName, String status, String updatedAt)  {
+    public PageTable getPageRole(Integer current, Integer pageSize, String sorter,
+                                 String roleCode, String roleName, String status, String updatedAt)  {
         //查询条件
         Specification<SysRole> specification = new Specification<SysRole>() {
             @Override
@@ -80,13 +80,13 @@ public class RoleController {
         };
         //查询
         Page<SysRole> pageRole = roleRepository.findAll(specification, PageRequest.of(current-1, pageSize, SortHelper.getSort(sorter, "roleCode")));
-        RoleTable roleTable = new RoleTable();
-        roleTable.setSuccess(true);
-        roleTable.setCurrent(current);
-        roleTable.setPageSize(pageSize);
-        roleTable.setTotal(pageRole.getTotalElements());
-        roleTable.setData(pageRole.getContent());
-        return roleTable;
+        PageTable<SysRole> pageTable = new PageTable();
+        pageTable.setSuccess(true);
+        pageTable.setCurrent(current);
+        pageTable.setPageSize(pageSize);
+        pageTable.setTotal(pageRole.getTotalElements());
+        pageTable.setData(pageRole.getContent());
+        return pageTable;
     }
 
     @PostMapping(value = "api/role/add")

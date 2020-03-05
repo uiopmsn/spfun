@@ -10,12 +10,12 @@ import java.util.List;
  * @Description:
  * @Date: 2020/2/27 18:53
  */
-public class RoleTable {
+public class PageTable<T> {
     private boolean success;
     private long total;
     private int pageSize;
     private int current;
-    private List<SysRole> data;
+    private List<T> data;
 
     public boolean isSuccess() {
         return success;
@@ -49,11 +49,11 @@ public class RoleTable {
         this.current = current;
     }
 
-    public List<SysRole> getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(List<SysRole> data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }
