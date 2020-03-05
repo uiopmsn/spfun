@@ -2,8 +2,8 @@ package com.funwe.service;
 
 import com.funwe.dao.entity.SysPerm;
 import com.funwe.dao.entity.SysRolePerm;
-import com.funwe.dao.repository.system.SysPermRepository;
-import com.funwe.dao.repository.system.SysRolePermRepository;
+import com.funwe.dao.repository.SysPermRepository;
+import com.funwe.dao.repository.SysRolePermRepository;
 import com.funwe.service.model.PermTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

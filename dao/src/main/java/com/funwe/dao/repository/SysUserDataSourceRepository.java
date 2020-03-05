@@ -1,4 +1,4 @@
-package com.funwe.dao.repository.system;
+package com.funwe.dao.repository;
 
 import com.funwe.dao.entity.SysUserCurrentDatasource;
 import org.springframework.data.jpa.repository.JpaRepository;

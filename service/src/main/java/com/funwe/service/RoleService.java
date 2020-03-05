@@ -2,13 +2,12 @@ package com.funwe.service;
 
 import com.funwe.dao.entity.SysRole;
 import com.funwe.dao.entity.SysRolePerm;
-import com.funwe.dao.repository.system.SysRolePermRepository;
-import com.funwe.dao.repository.system.SysRoleRepository;
+import com.funwe.dao.repository.SysRolePermRepository;
+import com.funwe.dao.repository.SysRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

@@ -2,7 +2,7 @@ package com.funwe.web.controller;
 
 import com.funwe.core.model.JsonResult;
 import com.funwe.dao.entity.SysRole;
-import com.funwe.dao.repository.system.SysRoleRepository;
+import com.funwe.dao.repository.SysRoleRepository;
 import com.funwe.service.RoleService;
 import com.funwe.web.helper.SortHelper;
 import com.funwe.web.model.RoleTable;

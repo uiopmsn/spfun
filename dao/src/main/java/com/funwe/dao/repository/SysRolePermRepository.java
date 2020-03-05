@@ -1,4 +1,4 @@
-package com.funwe.dao.repository.system;
+package com.funwe.dao.repository;
 
 import com.funwe.dao.entity.SysRolePerm;
 import org.springframework.data.jpa.repository.JpaRepository;
