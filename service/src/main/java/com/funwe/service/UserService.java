@@ -119,4 +119,25 @@ public class UserService {
         }
         //TODO  redis重置数据
     }
+
+    /**
+     * 添加用户
+     * @param userName
+     * @param userDesc
+     * @throws Exception
+     */
+    public void addUser(String userName, String userDesc) throws Exception{
+        if (userRepository.findById(userName).isPresent()){
+            throw new Exception("该用户名已被占用，请更换用户名");
+        }
+        String defaultPassWord = "123456";
+        SysUser user = new SysUser();
+        user.setUserName(userName);
+        user.setPassWord(CodecUtil.encryptMd5(defaultPassWord));
+        user.setUserDesc(userDesc);
+        user.setStatus(1);
+        user.setUpdatedAt(new Date());
+        userRepository.save(user);
+        //TODO  redis重置数据
+    }
 }

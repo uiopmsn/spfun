@@ -14,6 +14,7 @@ public class SysUser {
     @Id
     private String userName;
     private String passWord;
+    private String userDesc;
     private int status;
     private Date updatedAt;
 
@@ -47,5 +48,13 @@ public class SysUser {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getUserDesc() {
+        return userDesc;
+    }
+
+    public void setUserDesc(String userDesc) {
+        this.userDesc = userDesc;
     }
 }
