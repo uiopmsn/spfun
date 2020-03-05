@@ -22,7 +22,6 @@ public class UserService {
     @Autowired
     private SystemInfoRedis systemInfoRedis;
 
-
     /**
      * 校验用户名和密码，成功返回TOKEN
      * @param userName

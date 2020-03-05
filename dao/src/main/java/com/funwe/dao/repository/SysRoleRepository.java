@@ -31,15 +31,7 @@ public interface SysRoleRepository extends JpaRepository<SysRole, Long>{
     List<SysRole> findRolesOfPerm(long permId);
 
     /**
-     * sdsdsdsd
-     * @param pageable
-     * @return
-     */
-    @Query(value = "SELECT * FROM sys_role", nativeQuery = true)
-    Page<SysRole> findAllRole(Pageable pageable);
-
-    /**
-     * wewe
+     * 获取分页角色
      * @param spec
      * @param pageable
      * @return
