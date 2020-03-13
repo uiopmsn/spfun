@@ -5,6 +5,7 @@ import com.funwe.dao.entity.SysRole;
 import com.funwe.dao.repository.SysRoleRepository;
 import com.funwe.service.RoleService;
 import com.funwe.web.helper.SortHelper;
+import com.funwe.web.model.KeyValue;
 import com.funwe.web.model.PageTable;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -155,7 +156,6 @@ public class RoleController {
             for (String str: strPerms){
                 perms.add(Long.parseLong(str));
             }
-            //List<Long> perms = (List<Long>)map.get("perms");
             if ("".equals(id)){
                 throw new Exception("缺少id");
             }
@@ -176,6 +176,23 @@ public class RoleController {
         }
     }
 
+    @GetMapping(value = "api/role/getAllUsedRoles")
+    @ResponseBody
+    public JsonResult getAllUsedRoles(){
+        try {
+            List<KeyValue> data = new ArrayList<>();
+            List<SysRole> roles = roleService.getAllUsedRole();
+            for (SysRole role: roles){
+                KeyValue keyValue = new KeyValue();
+                keyValue.setKey(String.valueOf(role.getId()));
+                keyValue.setValue(role.getRoleName());
+                data.add(keyValue);
+            }
+            return JsonResult.success("成功", data);
+        }catch (Exception e){
+            return JsonResult.error(e.getMessage());
+        }
+    }
 
 
 }

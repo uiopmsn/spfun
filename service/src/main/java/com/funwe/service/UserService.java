@@ -5,9 +5,11 @@ import com.funwe.common.utils.CodecUtil;
 import com.funwe.common.utils.JwtUtil;
 import com.funwe.dao.entity.SysRole;
 import com.funwe.dao.entity.SysUser;
+import com.funwe.dao.entity.SysUserRole;
 import com.funwe.dao.model.Menu;
 import com.funwe.dao.redis.SystemInfoRedis;
 import com.funwe.dao.repository.SysUserRepository;
+import com.funwe.dao.repository.SysUserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,9 @@ public class UserService {
 
     @Autowired
     private SysUserRepository userRepository;
+
+    @Autowired
+    private SysUserRoleRepository userRoleRepository;
 
     /**
      * 校验用户名和密码，成功返回TOKEN
@@ -138,6 +143,47 @@ public class UserService {
         user.setStatus(1);
         user.setUpdatedAt(new Date());
         userRepository.save(user);
+        //TODO  redis重置数据
+    }
+
+    /**
+     * 更新用户及用户的角色
+     * @param userName
+     * @param userDesc
+     * @param roles
+     */
+    @Transactional(rollbackFor = {RuntimeException.class, Error.class})
+    public void updateUser(String userName, String userDesc, List<Long> roles){
+        SysUser user = userRepository.getOne(userName);
+        if (user.getUserName() != null){
+            user.setUserDesc(userDesc);
+            user.setUpdatedAt(new Date());
+            userRepository.save(user);
+            //用户角色
+            userRoleRepository.deleteByUserName(userName);
+            for (Long roleId : roles){
+                SysUserRole userRole = new SysUserRole();
+                userRole.setUserName(userName);
+                userRole.setRoleId(roleId);
+                userRoleRepository.save(userRole);
+            }
+        }
+        //TODO  redis重置数据
+    }
+
+    /**
+     * 重置用户密码
+     * @param userName
+     */
+    public void resetPassword(String userName){
+        SysUser user = userRepository.getOne(userName);
+        if (user.getUserName() != null){
+            String defaultPassword = "123456";
+            String password = CodecUtil.encryptMd5(defaultPassword);
+            user.setPassWord(password);
+            user.setUpdatedAt(new Date());
+            userRepository.save(user);
+        }
         //TODO  redis重置数据
     }
 }

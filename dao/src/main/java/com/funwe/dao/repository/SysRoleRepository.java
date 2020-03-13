@@ -37,4 +37,11 @@ public interface SysRoleRepository extends JpaRepository<SysRole, Long>{
      * @return
      */
     Page<SysRole> findAll(Specification<SysRole> spec, Pageable pageable);
+
+    /**
+     * 根据状态获取所有角色
+     * @param status
+     * @return
+     */
+    List<SysRole> findSysRolesByStatus(int status);
 }

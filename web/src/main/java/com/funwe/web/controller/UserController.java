@@ -3,9 +3,11 @@ package com.funwe.web.controller;
 import com.funwe.core.model.JsonResult;
 import com.funwe.dao.entity.SysUser;
 import com.funwe.dao.repository.SysUserRepository;
+import com.funwe.service.RoleService;
 import com.funwe.service.UserService;
 import com.funwe.web.helper.SortHelper;
 import com.funwe.web.model.PageTable;
+import com.funwe.web.model.UserAndRole;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +36,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     @GetMapping(value = "api/user/list")
     @ResponseBody
     public PageTable getPage(Integer current, Integer pageSize, String sorter,
@@ -60,18 +65,31 @@ public class UserController {
         };
         //查询
         Page<SysUser> pageRole = userRepository.findAll(specification, PageRequest.of(current-1, pageSize, SortHelper.getSort(sorter, "userName")));
-        PageTable<SysUser> pageTable = new PageTable();
+        //获取用户角色
+        List<UserAndRole> data = new ArrayList<>();
+        List<SysUser> users = pageRole.getContent();
+        for (SysUser user: users) {
+            List<String> roles = roleService.getUserRoles(user.getUserName());
+            UserAndRole userAndRole = new UserAndRole();
+            userAndRole.setUserName(user.getUserName());
+            userAndRole.setUserDesc(user.getUserDesc());
+            userAndRole.setStatus(user.getStatus());
+            userAndRole.setUserRole(roles);
+            data.add(userAndRole);
+        }
+
+        PageTable<UserAndRole> pageTable = new PageTable();
         pageTable.setSuccess(true);
         pageTable.setCurrent(current);
         pageTable.setPageSize(pageSize);
         pageTable.setTotal(pageRole.getTotalElements());
-        pageTable.setData(pageRole.getContent());
+        pageTable.setData(data);
         return pageTable;
     }
 
     @PostMapping(value = "api/user/add")
     @ResponseBody
-    public JsonResult addRole(@RequestBody Map<String,String> map){
+    public JsonResult addUser(@RequestBody Map<String,String> map){
         String userName = map.get("userName");
         String userDesc = map.get("userDesc");
         try {
@@ -117,4 +135,42 @@ public class UserController {
             return JsonResult.error(e.getMessage());
         }
     }
+
+    @PostMapping(value = "api/user/update")
+    @ResponseBody
+    public JsonResult updateRole(@RequestBody Map<String,Object> map){
+        try {
+            String userName = map.get("userName").toString();
+            String userDesc = map.get("userDesc").toString();
+            List<String> userRole = (List<String>)map.get("userRole");
+            List<Long> roles = new ArrayList<>();
+            for (String str: userRole){
+                roles.add(Long.parseLong(str));
+            }
+
+            if ("".equals(userName)){
+                throw new Exception("缺少用户名");
+            }
+            if ("".equals(userDesc)){
+                throw new Exception("缺少用户描述");
+            }
+            userService.updateUser(userName, userDesc, roles);
+            return JsonResult.success();
+        }catch (Exception e){
+            return JsonResult.error(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "api/user/resetPw")
+    @ResponseBody
+    public JsonResult resetPassword(@RequestBody Map<String,String> map){
+        try {
+            String userName = map.get("userName");
+            userService.resetPassword(userName);
+            return JsonResult.success();
+        }catch (Exception e){
+            return JsonResult.error(e.getMessage());
+        }
+    }
+
 }

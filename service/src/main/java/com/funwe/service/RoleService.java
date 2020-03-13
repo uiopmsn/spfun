@@ -2,12 +2,15 @@ package com.funwe.service;
 
 import com.funwe.dao.entity.SysRole;
 import com.funwe.dao.entity.SysRolePerm;
+import com.funwe.dao.entity.SysUserRole;
 import com.funwe.dao.repository.SysRolePermRepository;
 import com.funwe.dao.repository.SysRoleRepository;
+import com.funwe.dao.repository.SysUserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +26,9 @@ public class RoleService {
 
     @Autowired
     private SysRolePermRepository rolePermRepository;
+
+    @Autowired
+    private SysUserRoleRepository userRoleRepository;
 
     /**
      * 批量停用角色
@@ -86,5 +92,25 @@ public class RoleService {
         //TODO  redis重置数据
     }
 
+    /**
+     * 获取所有角色
+     * @return
+     */
+    public List<SysRole> getAllUsedRole(){
+        return roleRepository.findSysRolesByStatus(1);
+    }
 
+    /**
+     * 根据用户角色
+     * @param userName
+     * @return
+     */
+    public List<String> getUserRoles(String userName){
+        List<String> result = new ArrayList<>();
+        List<SysUserRole> roles = userRoleRepository.findRolesByUserName(userName);
+        for (SysUserRole role: roles){
+            result.add(String.valueOf(role.getRoleId()));
+        }
+        return result;
+    }
 }
