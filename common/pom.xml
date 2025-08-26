@@ -21,7 +21,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <commons-codec.version>1.8</commons-codec.version>
-        <commons-lang.version>3.3.2</commons-lang.version>
+        <commons-lang.version>3.18.0</commons-lang.version>
         <jwt.version>3.5.0</jwt.version>
         <fastjson.version>1.2.15</fastjson.version>
         <lombok.version>1.16.10</lombok.version>
